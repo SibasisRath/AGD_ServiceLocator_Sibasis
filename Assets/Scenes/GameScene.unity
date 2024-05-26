@@ -152,6 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ecab4ab9556097469b1cdf5aeb9b5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiService: {fileID: 1107832201}
+  mapService: {fileID: 1775323201}
+  soundService: {fileID: 1608414551}
+  playerService: {fileID: 81048208}
   playerScriptableObject: {fileID: 11400000, guid: ba423c4fbfbefa248b49a627b9e607b6, type: 2}
 --- !u!4 &81048209
 Transform:
@@ -364,6 +368,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1107832201 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7182248005041137930, guid: 15430d56842a28843b57fd250730f142, type: 3}
+  m_PrefabInstance: {fileID: 7182248004000416899}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 583d4a8aa295a574b9c754281cc7873e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1241429277
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,6 +408,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 066c2c6d53ce8574c9c0b875b3386ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventService: {fileID: 338547895}
+  uiService: {fileID: 1107832201}
+  mapService: {fileID: 1775323201}
+  soundService: {fileID: 1608414551}
+  playerService: {fileID: 81048208}
   waveScriptableObject: {fileID: 11400000, guid: 1a1805a3a12f21d4c9847d85958ab9ce, type: 2}
 --- !u!4 &1241429279
 Transform:
@@ -613,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3fe4ed09c4de614794ae9d9ad4a2b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventService: {fileID: 338547895}
   mapScriptableObject: {fileID: 11400000, guid: 412d441209954ab47a08973a630f316a, type: 2}
 --- !u!4 &1775323202
 Transform:
@@ -764,6 +785,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7182248003563694489, guid: 15430d56842a28843b57fd250730f142, type: 3}
+      propertyPath: eventService
+      value: 
+      objectReference: {fileID: 338547895}
+    - target: {fileID: 7182248005041137930, guid: 15430d56842a28843b57fd250730f142, type: 3}
+      propertyPath: waveService
+      value: 
+      objectReference: {fileID: 1241429278}
+    - target: {fileID: 7182248005041137930, guid: 15430d56842a28843b57fd250730f142, type: 3}
+      propertyPath: eventService
+      value: 
+      objectReference: {fileID: 338547895}
+    - target: {fileID: 7182248005041137930, guid: 15430d56842a28843b57fd250730f142, type: 3}
+      propertyPath: playerService
+      value: 
+      objectReference: {fileID: 81048208}
     - target: {fileID: 7182248005041137931, guid: 15430d56842a28843b57fd250730f142, type: 3}
       propertyPath: m_Name
       value: Canvas - UI Service

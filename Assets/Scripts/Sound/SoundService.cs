@@ -1,6 +1,6 @@
+using ServiceLocator.Wave;
 using System;
 using UnityEngine;
-using ServiceLocator.Utilities;
 
 namespace ServiceLocator.Sound
 {
@@ -9,6 +9,7 @@ namespace ServiceLocator.Sound
         [SerializeField] private SoundScriptableObject soundScriptableObject;
         [SerializeField] private AudioSource audioEffects;
         [SerializeField] private AudioSource backgroundMusic;
+
 
         private void Start()
         {
