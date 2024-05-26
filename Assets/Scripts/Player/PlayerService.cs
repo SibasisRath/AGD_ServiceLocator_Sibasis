@@ -37,7 +37,14 @@ namespace ServiceLocator.Player
 
         public void Update()
         {
-            if(Input.GetMouseButtonDown(0))
+            if (activeMonkeys.Count > 0)
+            {
+                foreach (MonkeyController monkeyController in activeMonkeys)
+                {
+                    monkeyController.UpdateMonkey();
+                }
+            }
+            if (Input.GetMouseButtonDown(0))
             {
                 TrySelectingMonkey();
             }
@@ -49,7 +56,7 @@ namespace ServiceLocator.Player
 
             foreach (RaycastHit2D hit in hits)
             {
-                if(IsMonkeyCollider(hit.collider))
+                if (IsMonkeyCollider(hit.collider))
                 {
                     SetSelectedMonkeyView(hit.collider.GetComponent<MonkeyView>());
                     return;
