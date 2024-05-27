@@ -14,7 +14,7 @@ public class GameService : GenericMonoSingleton<GameService>
     public SoundService soundService { get; private set; }
     public UIService UIService => uIService;
 
-    public EventService EventService => eventService;
+    public EventService eventService { get; private set; }
     public MapService mapService { get; private set; }
 
     public WaveService waveService { get; private set; }
@@ -23,9 +23,7 @@ public class GameService : GenericMonoSingleton<GameService>
     [SerializeField] private SoundScriptableObject soundScriptableObject;
     [SerializeField] private AudioSource audioEffects;
     [SerializeField] private AudioSource backgroundMusic;
-
     [SerializeField] private UIService uIService;
-    private EventService eventService;
     [SerializeField] private MapScriptableObject mapScriptableObject;
     [SerializeField] private WaveScriptableObject waveScriptableObject;
     private void Start()
