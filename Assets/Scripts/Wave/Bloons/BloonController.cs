@@ -94,6 +94,8 @@ namespace ServiceLocator.Wave.Bloon
 
         private void MoveBloon(Vector3 moveDirection) => bloonView.transform.Translate(moveDirection.normalized * bloonScriptableObject.Speed * Time.deltaTime);
 
+        public void SetOrderInLayer(int orderInLayer) => bloonView.SetSortingOrder(orderInLayer);
+
         private void PopBloon()
         {
             SetState(BloonState.POPPED);

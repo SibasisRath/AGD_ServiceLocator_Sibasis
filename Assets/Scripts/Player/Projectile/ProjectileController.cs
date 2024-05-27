@@ -72,5 +72,13 @@ namespace ServiceLocator.Player.Projectile
             ACTIVE,
             HIT_TARGET
         }
+
+        private void SetState(ProjectileState newState) => currentState = newState;
+
+        private enum ProjectileState
+        {
+            ACTIVE,
+            HIT_TARGET
+        }
     }
 }

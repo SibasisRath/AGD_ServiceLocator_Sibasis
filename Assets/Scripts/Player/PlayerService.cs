@@ -34,6 +34,10 @@ namespace ServiceLocator.Player
             GameService.Instance.UIService.UpdateHealthUI(health);
             GameService.Instance.UIService.UpdateMoneyUI(Money);
             activeMonkeys = new List<MonkeyController>();
+            health = playerScriptableObject.Health;
+            Money = playerScriptableObject.Money;
+            GameService.Instance.UIService.UpdateHealthUI(health);
+            GameService.Instance.UIService.UpdateMoneyUI(Money);
         }
 
         public void Update()

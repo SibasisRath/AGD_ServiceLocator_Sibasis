@@ -18,6 +18,8 @@ namespace ServiceLocator.Map
         public MapService(MapScriptableObject mapScriptableObject)
         {
             this.mapScriptableObject = mapScriptableObject;
+            tileOverlay = Object.Instantiate(mapScriptableObject.TileOverlay).GetComponent<SpriteRenderer>();
+            ResetTileOverlay();
             SubscribeToEvents();
             tileOverlay = Object.Instantiate(mapScriptableObject.TileOverlay).GetComponent<SpriteRenderer>();
             ResetTileOverlay();
@@ -40,11 +42,6 @@ namespace ServiceLocator.Map
 
         private void SetTileOverlayColor(TileOverlayColor colorToSet)
         {
-            if (mapScriptableObject == null)
-            {
-                Debug.LogError("mapScriptableObject is null. Unable to set tile overlay color.");
-                return;
-            }
             switch (colorToSet)
             {
                 case TileOverlayColor.TRANSPARENT:
