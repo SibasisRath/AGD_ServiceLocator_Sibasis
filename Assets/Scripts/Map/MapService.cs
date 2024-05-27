@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using ServiceLocator.Main;
 using ServiceLocator.Player;
+using ServiceLocator.Events;
 
 namespace ServiceLocator.Map
 {
@@ -21,9 +21,11 @@ namespace ServiceLocator.Map
             tileOverlay = Object.Instantiate(mapScriptableObject.TileOverlay).GetComponent<SpriteRenderer>();
             ResetTileOverlay();
             SubscribeToEvents();
+            tileOverlay = Object.Instantiate(mapScriptableObject.TileOverlay).GetComponent<SpriteRenderer>();
+            ResetTileOverlay();
         }
 
-        private void SubscribeToEvents() => GameService.Instance.EventService.OnMapSelected.AddListener(LoadMap);
+        private void SubscribeToEvents() => GameService.Instance.eventService.OnMapSelected.AddListener(LoadMap);
 
         private void LoadMap(int mapId)
         {
@@ -76,13 +78,13 @@ namespace ServiceLocator.Map
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorPosition);
             Vector3Int cellPosition = GetCellPosition(mousePosition);
-            Vector3 centerCell = GetCenterOfCell(cellPosition);
-            
+            Vector3 cellCenter = GetCenterOfCell(cellPosition);
+
             ResetTileOverlay();
 
-            if (CanSpawnOnPosition(centerCell, cellPosition))
+            if (CanSpawnOnPosition(cellCenter, cellPosition))
             {
-                spawnPosition = centerCell;
+                spawnPosition = cellCenter;
                 return true;
             }
             else
@@ -96,9 +98,9 @@ namespace ServiceLocator.Map
 
         private Vector3 GetCenterOfCell(Vector3Int cellPosition) => currentGrid.GetCellCenterWorld(cellPosition);
 
-        private bool CanSpawnOnPosition(Vector3 centerCell, Vector3Int cellPosition)
+        private bool CanSpawnOnPosition(Vector3 cellCenter, Vector3Int cellPosition)
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(centerCell, 0.1f);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(cellCenter, 0.1f);
             return InisdeTilemapBounds(cellPosition) && !HasClickedOnObstacle(colliders) && !IsOverLappingMonkey(colliders);
         }
 
@@ -123,9 +125,7 @@ namespace ServiceLocator.Map
             foreach (Collider2D collider in colliders)
             {
                 if (collider.gameObject.GetComponent<MonkeyView>() != null && !collider.isTrigger)
-                {
                     return true;
-                }
             }
             return false;
         }

@@ -1613,6 +1613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8b6d1b17d3135448c7945570764f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventService: {fileID: 0}
   MapId: 1
 --- !u!1 &7182248003610753085
 GameObject:
@@ -2999,6 +3000,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583d4a8aa295a574b9c754281cc7873e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventService: {fileID: 0}
+  waveService: {fileID: 0}
+  playerService: {fileID: 0}
   gameplayPanel: {fileID: 7182248003487203128}
   healthText: {fileID: 7182248004712830878}
   moneyText: {fileID: 7182248004752353294}

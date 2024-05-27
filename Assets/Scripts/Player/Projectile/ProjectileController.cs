@@ -1,11 +1,11 @@
 using UnityEngine;
 using ServiceLocator.Wave.Bloon;
-using ServiceLocator.Main;
 
 namespace ServiceLocator.Player.Projectile
 {
     public class ProjectileController
     {
+
         private ProjectileView projectileView;
         private ProjectileScriptableObject projectileScriptableObject;
 
@@ -62,7 +62,15 @@ namespace ServiceLocator.Player.Projectile
         {
             target = null;
             projectileView.gameObject.SetActive(false);
-            GameService.Instance.PlayerService.ReturnProjectileToPool(this);
+            GameService.Instance.playerService.ReturnProjectileToPool(this);
+        }
+
+        private void SetState(ProjectileState newState) => currentState = newState;
+
+        private enum ProjectileState
+        {
+            ACTIVE,
+            HIT_TARGET
         }
 
         private void SetState(ProjectileState newState) => currentState = newState;
