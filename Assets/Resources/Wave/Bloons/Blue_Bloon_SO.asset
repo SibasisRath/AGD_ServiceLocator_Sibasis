@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b32fea2b81d77ab45b7095799571b00f, type: 3}
-  m_Name: Bloon_3_SO
+  m_Name: Blue_Bloon_SO
   m_EditorClassIdentifier: 
-  Type: 2
+  Type: 1
   Health: 1
-  Damage: 50
-  Reward: 50
-  Speed: 1
-  Sprite: {fileID: 21300000, guid: d70bd1152404cdc48a4e118505c8a024, type: 3}
-  LayeredBloons: 0100000001000000010000000100000001000000
+  Damage: 5
+  Reward: 10
+  Speed: 3
+  Sprite: {fileID: 21300000, guid: 915f49b044ce260499e22574848f3397, type: 3}
+  LayeredBloons: 0000000000000000000000000000000000000000
   LayerBloonSpawnRate: 0.2
