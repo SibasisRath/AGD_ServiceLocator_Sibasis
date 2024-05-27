@@ -31,6 +31,7 @@ public class GameService : GenericMonoSingleton<GameService>
         playerService = new PlayerService(playerScriptableObject);
         soundService = new SoundService(soundScriptableObject, audioEffects, backgroundMusic);
         eventService = new EventService();
+        uIService.SubscribeToEvents();
         mapService = new MapService(mapScriptableObject);
         waveService = new WaveService(waveScriptableObject);
     }
