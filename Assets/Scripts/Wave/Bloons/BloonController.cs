@@ -1,5 +1,3 @@
-using ServiceLocator.Player;
-using ServiceLocator.Sound;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,8 +48,6 @@ namespace ServiceLocator.Wave.Bloon
             currentWaypointIndex = startingWaypointIndex;
         }
 
-        public void SetOrderInLayer(int orderInLayer) => bloonView.SetSortingOrder(orderInLayer);
-
         public void TakeDamage(int damageToTake)
         {
             int reducedHealth = currentHealth - damageToTake;
@@ -66,7 +62,7 @@ namespace ServiceLocator.Wave.Bloon
 
         public void FollowWayPoints()
         {
-            if(HasReachedFinalWaypoint())
+            if (HasReachedFinalWaypoint())
             {
                 ResetBloon();
             }
@@ -114,9 +110,9 @@ namespace ServiceLocator.Wave.Bloon
         private bool HasLayeredBloons() => bloonScriptableObject.LayeredBloons.Count > 0;
 
         private void SpawnLayeredBloons() => GameService.Instance.waveService.SpawnBloons(bloonScriptableObject.LayeredBloons,
-                                                                              bloonView.transform.position,
-                                                                              currentWaypointIndex,
-                                                                              bloonScriptableObject.LayerBloonSpawnRate);
+                                                                                          bloonView.transform.position,
+                                                                                          currentWaypointIndex,
+                                                                                          bloonScriptableObject.LayerBloonSpawnRate);
 
         public BloonType GetBloonType() => bloonScriptableObject.Type;
 
