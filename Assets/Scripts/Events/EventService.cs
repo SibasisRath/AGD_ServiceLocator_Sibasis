@@ -1,3 +1,4 @@
+using PlasticPipe.PlasticProtocol.Messages;
 using UnityEngine;
 
 /**  This script demonstrates implementation of the Observer Pattern.
@@ -8,14 +9,10 @@ using UnityEngine;
 
 namespace ServiceLocator.Events
 {
-    public class EventService : MonoBehaviour
+    public class EventService
     {
         public GameEventController<int> OnMapSelected { get; private set; }
 
-        private void Awake()
-        {
-            OnMapSelected = new GameEventController<int>();
-        }
-        
+        public EventService() { OnMapSelected = new GameEventController<int>(); }
     }
 }
