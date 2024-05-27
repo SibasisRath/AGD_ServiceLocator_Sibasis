@@ -8,9 +8,9 @@ using ServiceLocator.Wave;
 
 namespace ServiceLocator.UI
 {
-    public class UIService : GenericMonoSingleton<UIService>
+    public class UIService : MonoBehaviour
     {
-        [SerializeField] private EventService eventService;
+        //[SerializeField] private EventService eventService;
 
         [Header("Gameplay Panel")]
         [SerializeField] private GameObject gameplayPanel;
@@ -54,7 +54,7 @@ namespace ServiceLocator.UI
             SubscribeToEvents();
         }
 
-        public void SubscribeToEvents() => eventService.OnMapSelected.AddListener(OnMapSelected);
+        public void SubscribeToEvents() => GameService.Instance.EventService.OnMapSelected.AddListener(OnMapSelected);
 
         public void OnMapSelected(int mapID)
         {
@@ -67,7 +67,7 @@ namespace ServiceLocator.UI
 
         private void OnNextWaveButton()
         {
-            WaveService.Instance.StarNextWave();
+            GameService.Instance.waveService.StarNextWave();
             SetNextWaveButton(false);
         }
 
