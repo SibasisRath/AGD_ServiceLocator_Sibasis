@@ -10,8 +10,6 @@ namespace ServiceLocator.UI
 {
     public class UIService : MonoBehaviour
     {
-        //[SerializeField] private EventService eventService;
-
         [Header("Gameplay Panel")]
         [SerializeField] private GameObject gameplayPanel;
         [SerializeField] private TextMeshProUGUI healthText;
@@ -37,6 +35,10 @@ namespace ServiceLocator.UI
         [SerializeField] private Button playAgainButton;
         [SerializeField] private Button quitButton;
 
+        private EventService eventService;
+        private WaveService waveService;
+
+
         private void Start()
         {
             monkeySelectionController = new MonkeySelectionUIController(cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
@@ -52,7 +54,14 @@ namespace ServiceLocator.UI
             playAgainButton.onClick.AddListener(OnPlayAgainButtonClicked);
         }
 
-        public void SubscribeToEvents() => GameService.Instance.eventService.OnMapSelected.AddListener(OnMapSelected);
+        public void Init(EventService eventService, WaveService waveService)
+        {
+            this.eventService = eventService;
+            this.waveService = waveService;
+            SubscribeToEvents();
+        }
+
+        public void SubscribeToEvents() => eventService.OnMapSelected.AddListener(OnMapSelected);
 
         public void OnMapSelected(int mapID)
         {
@@ -65,7 +74,7 @@ namespace ServiceLocator.UI
 
         private void OnNextWaveButton()
         {
-            GameService.Instance.waveService.StarNextWave();
+            waveService.StarNextWave();
             SetNextWaveButton(false);
         }
 
