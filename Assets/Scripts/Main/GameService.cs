@@ -28,12 +28,23 @@ public class GameService : GenericMonoSingleton<GameService>
     [SerializeField] private WaveScriptableObject waveScriptableObject;
     private void Start()
     {
+        CreateServies();
+        InjectDependency();
+    }
+
+    private void CreateServies()
+    {
         eventService = new EventService();
         UIService.SubscribeToEvents();
         mapService = new MapService(mapScriptableObject);
         waveService = new WaveService(waveScriptableObject);
         soundService = new SoundService(soundScriptableObject, audioEffects, backgroundMusic);
         playerService = new PlayerService(playerScriptableObject);
+    }
+
+    public void InjectDependency()
+    {
+        playerService.Init(uIService, mapService, soundService);
     }
 
     private void Update()
