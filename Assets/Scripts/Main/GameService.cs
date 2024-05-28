@@ -35,7 +35,6 @@ public class GameService : GenericMonoSingleton<GameService>
     private void CreateServies()
     {
         eventService = new EventService();
-        UIService.SubscribeToEvents();
         mapService = new MapService(mapScriptableObject);
         waveService = new WaveService(waveScriptableObject);
         soundService = new SoundService(soundScriptableObject, audioEffects, backgroundMusic);
@@ -45,6 +44,9 @@ public class GameService : GenericMonoSingleton<GameService>
     public void InjectDependency()
     {
         playerService.Init(uIService, mapService, soundService);
+        mapService.Init(eventService);
+        waveService.Init(mapService, uIService, eventService, soundService);
+        uIService.Init(eventService, waveService);
     }
 
     private void Update()
