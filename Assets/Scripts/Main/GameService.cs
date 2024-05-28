@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameService : GenericMonoSingleton<GameService>
+public class GameService : MonoBehaviour
 {
     public PlayerService playerService {  get; private set; }
     public SoundService soundService { get; private set; }
@@ -45,8 +45,8 @@ public class GameService : GenericMonoSingleton<GameService>
     {
         playerService.Init(uIService, mapService, soundService);
         mapService.Init(eventService);
-        waveService.Init(mapService, uIService, eventService, soundService);
-        uIService.Init(eventService, waveService);
+        waveService.Init(mapService, uIService, eventService, soundService, playerService);
+        uIService.Init(eventService, waveService, playerService);
     }
 
     private void Update()
