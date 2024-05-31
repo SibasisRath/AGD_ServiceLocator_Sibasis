@@ -7,6 +7,7 @@ using ServiceLocator.UI;
 using ServiceLocator.Map;
 using ServiceLocator.Sound;
 using ServiceLocator.Player;
+using System.Collections;
 
 namespace ServiceLocator.Wave
 {
@@ -68,16 +69,21 @@ namespace ServiceLocator.Wave
             SpawnBloons(bloonsToSpawn, spawnPosition, 0, waveScriptableObject.SpawnRate);
         }
 
-        public async void SpawnBloons(List<BloonType> bloonsToSpawn, Vector3 spawnPosition, int startingWaypointIndex, float spawnRate)
+        public void SpawnBloons(List<BloonType> bloonsToSpawn, Vector3 spawnPosition, int startingWaypointIndex, float spawnRate)
         {
-            foreach(BloonType bloonType in bloonsToSpawn)
+            uIService.StartCoroutine(SpawnBloonRoutine(bloonsToSpawn, spawnPosition, startingWaypointIndex, waveScriptableObject.SpawnRate));
+        }
+
+        private IEnumerator SpawnBloonRoutine(List<BloonType> bloonsToSpawn, Vector3 spawnPosition, int startingWaypointIndex, float spawnRate)
+        {
+            foreach (BloonType bloonType in bloonsToSpawn)
             {
                 BloonController bloon = bloonPool.GetBloon(bloonType);
                 bloon.SetPosition(spawnPosition);
                 bloon.SetWayPoints(mapService.GetWayPointsForCurrentMap(), startingWaypointIndex);
 
                 AddBloon(bloon);
-                await Task.Delay(Mathf.RoundToInt(spawnRate * 1000));
+                yield return new WaitForSeconds(spawnRate);
             }
         }
 
