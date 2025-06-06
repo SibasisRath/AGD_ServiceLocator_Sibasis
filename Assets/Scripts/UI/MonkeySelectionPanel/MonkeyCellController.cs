@@ -9,16 +9,18 @@ namespace ServiceLocator.UI
     public class MonkeyCellController
     {
         private PlayerService playerService;
+        private UIService uiService;
         private MonkeyCellView monkeyCellView;
         private MonkeyCellScriptableObject monkeyCellSO;
 
-        public MonkeyCellController(PlayerService playerService, Transform cellContainer, MonkeyCellView monkeyCellPrefab, MonkeyCellScriptableObject monkeyCellScriptableObject)
+        public MonkeyCellController(PlayerService playerService, UIService uIService, Transform cellContainer, MonkeyCellView monkeyCellPrefab, MonkeyCellScriptableObject monkeyCellScriptableObject)
         {
             this.playerService = playerService;
+            this.uiService = uIService;
             this.monkeyCellSO = monkeyCellScriptableObject;
             monkeyCellView = Object.Instantiate(monkeyCellPrefab, cellContainer);
             monkeyCellView.SetController(this);
-            monkeyCellView.ConfigureCellUI(monkeyCellSO.Sprite, monkeyCellSO.Name, monkeyCellSO.Cost);
+            monkeyCellView.ConfigureCellUI(monkeyCellSO.Sprite, monkeyCellSO.Name, monkeyCellSO.Cost, uiService.GetCanvas());
         }
 
         public void MonkeyDraggedAt(Vector3 dragPosition)

@@ -16,10 +16,12 @@ namespace ServiceLocator.UI
         private Vector2 originalAnchoredPosition;
         private Vector3 originalPosition;
 
-        public void ConfigureImageHandler(Sprite spriteToSet, MonkeyCellController owner)
+        private Canvas canvas;
+        public void ConfigureImageHandler(Sprite spriteToSet, MonkeyCellController owner, Canvas canvas)
         {
             this.spriteToSet = spriteToSet;
             this.owner = owner;
+            this.canvas = canvas;
         }
 
         private void Awake()
@@ -35,7 +37,7 @@ namespace ServiceLocator.UI
 
         public void OnDrag(PointerEventData eventData)
         {
-            rectTransform.anchoredPosition += eventData.delta;
+            rectTransform.anchoredPosition += eventData.delta / this.canvas.scaleFactor;
             owner.MonkeyDraggedAt(eventData.position);
         }
 
