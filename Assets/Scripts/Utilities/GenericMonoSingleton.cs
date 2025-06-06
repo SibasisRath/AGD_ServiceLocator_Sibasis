@@ -1,22 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace ServiceLocator.Utilities
+public class GenericMonoSingleton<T> : MonoBehaviour where T : GenericMonoSingleton<T>
 {
-    public class GenericMonoSingleton<T> : MonoBehaviour where T : GenericMonoSingleton<T>
-    {
-        private static T instance;
-        public static T Instance { get { return instance; } }
+    private static T instance;
+    public static T Instance {  get { return instance; } }
 
-        protected virtual void Awake()
+    private void Awake()
+    {
+        if (instance == null)
         {
-            if (instance == null)
-            {
-                instance = (T)this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            instance = (T)this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            Debug.LogError((T)this + " is trying to create a second instance.");
         }
     }
 }

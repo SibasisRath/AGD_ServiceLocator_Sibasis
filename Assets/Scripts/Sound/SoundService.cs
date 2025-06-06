@@ -1,3 +1,4 @@
+using ServiceLocator.Wave;
 using System;
 using UnityEngine;
 
@@ -9,11 +10,11 @@ namespace ServiceLocator.Sound
         private AudioSource audioEffects;
         private AudioSource backgroundMusic;
 
-        public SoundService(SoundScriptableObject soundScriptableObject, AudioSource audioEffectSource, AudioSource bgMusicSource)
+        public SoundService(SoundScriptableObject soundScriptableObject, AudioSource audioSource, AudioSource backgroundMusic )
         {
             this.soundScriptableObject = soundScriptableObject;
-            audioEffects = audioEffectSource;
-            backgroundMusic = bgMusicSource;
+            this.audioEffects = audioSource;
+            this.backgroundMusic = backgroundMusic;
             PlaybackgroundMusic(SoundType.BackgroundMusic, true);
         }
 
