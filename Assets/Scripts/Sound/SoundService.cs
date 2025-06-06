@@ -40,8 +40,6 @@ namespace ServiceLocator.Sound
                 backgroundMusic.clip = clip;
                 backgroundMusic.Play();
             }
-            else
-                Debug.LogError("No Audio Clip selected.");
         }
 
         private AudioClip GetSoundClip(SoundType soundType)

@@ -33,6 +33,7 @@ namespace ServiceLocator.UI
         [SerializeField] private Transform cellContainer;
         [SerializeField] private MonkeyCellView monkeyCellPrefab;
         [SerializeField] private List<MonkeyCellScriptableObject> monkeyCellScriptableObjects;
+        [SerializeField] private Canvas canvas;
 
         [Header("Game End Panel")]
         [SerializeField] private GameObject gameEndPanel;
@@ -50,7 +51,7 @@ namespace ServiceLocator.UI
             playAgainButton.onClick.AddListener(OnPlayAgainButtonClicked);
         }
 
-        public void Init(EventService eventService, WaveService waveService, PlayerService playerService)
+        public void Init(WaveService waveService, PlayerService playerService, EventService eventService)
         {
             this.waveService = waveService;
             this.eventService = eventService;
@@ -71,7 +72,7 @@ namespace ServiceLocator.UI
 
         private void InitializeMonkeySelectionUI(PlayerService playerService)
         {
-            monkeySelectionController = new MonkeySelectionUIController(playerService, cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
+            monkeySelectionController = new MonkeySelectionUIController(playerService, this, cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
             MonkeySelectionPanel.SetActive(false);
             monkeySelectionController.SetActive(false);
         }
@@ -115,6 +116,11 @@ namespace ServiceLocator.UI
                 gameEndText.SetText("You Won");
             else
                 gameEndText.SetText("Game Over");
+        }
+
+        public Canvas GetCanvas()
+        {
+            return canvas;
         }
 
     }

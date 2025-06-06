@@ -8,38 +8,39 @@ namespace ServiceLocator.Player
 {
     public class MonkeyController
     {
-        private MonkeyView monkeyView;
+        // Dependencies:
+        private SoundService soundService;
         private MonkeyScriptableObject monkeyScriptableObject;
         private ProjectilePool projectilePool;
-
+        private MonkeyView monkeyView;
+        
         private List<BloonController> bloonsInRange;
         private float attackTimer;
 
-        private SoundService soundService;
-
-        public MonkeyController(MonkeyScriptableObject monkeyScriptableObject, ProjectilePool projectilePool, SoundService soundService)
+        public MonkeyController(SoundService soundService, MonkeyScriptableObject monkeyScriptableObject, ProjectilePool projectilePool)
         {
             this.soundService = soundService;
+            this.monkeyScriptableObject = monkeyScriptableObject;
+            this.projectilePool = projectilePool;
+
+            CreateMonkeyView();
+            InitializeVariables();
+        }
+
+        private void CreateMonkeyView()
+        {
             monkeyView = Object.Instantiate(monkeyScriptableObject.Prefab);
             monkeyView.SetController(this);
             monkeyView.SetTriggerRadius(monkeyScriptableObject.Range);
+        }
 
-            this.monkeyScriptableObject = monkeyScriptableObject;
-            this.projectilePool = projectilePool;
+        private void InitializeVariables()
+        {
             bloonsInRange = new List<BloonController>();
             ResetAttackTimer();
         }
 
         public void SetPosition(Vector3 positionToSet) => monkeyView.transform.position = positionToSet;
-
-        public void UpdateMonkey()
-        {
-            if (bloonsInRange.Count > 0)
-            {
-                RotateTowardsTarget(bloonsInRange[0]);
-                ShootAtTarget(bloonsInRange[0]);
-            }
-        }
 
         public void BloonEnteredRange(BloonController bloon)
         {
@@ -55,7 +56,14 @@ namespace ServiceLocator.Player
 
         public bool CanAttackBloon(BloonType bloonType) => monkeyScriptableObject.AttackableBloons.Contains(bloonType);
 
-
+        public void UpdateMonkey()
+        {
+            if(bloonsInRange.Count > 0)
+            {
+                RotateTowardsTarget(bloonsInRange[0]);
+                ShootAtTarget(bloonsInRange[0]);
+            }
+        }
 
         private void RotateTowardsTarget(BloonController targetBloon)
         {
@@ -67,14 +75,19 @@ namespace ServiceLocator.Player
         private void ShootAtTarget(BloonController targetBloon)
         {
             attackTimer -= Time.deltaTime;
-            if (attackTimer <= 0)
+            if(attackTimer <= 0)
             {
-                ProjectileController projectile = projectilePool.GetProjectile(monkeyScriptableObject.projectileType);
-                projectile.SetPosition(monkeyView.transform.position);
-                projectile.SetTarget(targetBloon);
-                soundService.PlaySoundEffects(Sound.SoundType.MonkeyShoot);
+                CreateProjectileForTarget(targetBloon);
+                soundService.PlaySoundEffects(SoundType.MonkeyShoot);
                 ResetAttackTimer();
             }
+        }
+
+        private void CreateProjectileForTarget(BloonController targetBloon)
+        {
+            ProjectileController projectile = projectilePool.GetProjectile(monkeyScriptableObject.projectileType);
+            projectile.SetPosition(monkeyView.transform.position);
+            projectile.SetTarget(targetBloon);
         }
 
         private void ResetAttackTimer() => attackTimer = monkeyScriptableObject.AttackRate;

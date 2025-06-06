@@ -1,20 +1,19 @@
 using UnityEngine;
 using ServiceLocator.Wave.Bloon;
+using ServiceLocator.Main;
 
 namespace ServiceLocator.Player.Projectile
 {
     public class ProjectileController
     {
-
+        private PlayerService playerService;
         private ProjectileView projectileView;
         private ProjectileScriptableObject projectileScriptableObject;
 
         private BloonController target;
         private ProjectileState currentState;
 
-        private PlayerService playerService;
-
-        public ProjectileController(ProjectileView projectilePrefab, Transform projectileContainer, PlayerService playerService)
+        public ProjectileController(PlayerService playerService, ProjectileView projectilePrefab, Transform projectileContainer)
         {
             this.playerService = playerService;
             projectileView = Object.Instantiate(projectilePrefab, projectileContainer);
@@ -53,7 +52,7 @@ namespace ServiceLocator.Player.Projectile
 
         public void OnHitBloon(BloonController bloonHit)
         {
-            if (currentState == ProjectileState.ACTIVE)
+            if(currentState == ProjectileState.ACTIVE)
             {
                 bloonHit.TakeDamage(projectileScriptableObject.Damage);
                 ResetProjectile();
@@ -69,11 +68,11 @@ namespace ServiceLocator.Player.Projectile
         }
 
         private void SetState(ProjectileState newState) => currentState = newState;
+    }
 
-        private enum ProjectileState
-        {
-            ACTIVE,
-            HIT_TARGET
-        }
+    public enum ProjectileState
+    {
+        ACTIVE,
+        HIT_TARGET
     }
 }

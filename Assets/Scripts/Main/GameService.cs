@@ -1,56 +1,60 @@
+using UnityEngine;
 using ServiceLocator.Events;
 using ServiceLocator.Map;
-using ServiceLocator.Player;
-using ServiceLocator.Sound;
-using ServiceLocator.UI;
 using ServiceLocator.Wave;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using ServiceLocator.Sound;
+using ServiceLocator.Player;
+using ServiceLocator.UI;
 
-public class GameService : MonoBehaviour
+namespace ServiceLocator.Main
 {
-    public PlayerService playerService {  get; private set; }
-    public SoundService soundService { get; private set; }
-    public UIService UIService => uIService;
-
-    public EventService eventService { get; private set; }
-    public MapService mapService { get; private set; }
-
-    public WaveService waveService { get; private set; }
-
-    [SerializeField] private PlayerScriptableObject playerScriptableObject;
-    [SerializeField] private SoundScriptableObject soundScriptableObject;
-    [SerializeField] private AudioSource audioEffects;
-    [SerializeField] private AudioSource backgroundMusic;
-    [SerializeField] private UIService uIService;
-    [SerializeField] private MapScriptableObject mapScriptableObject;
-    [SerializeField] private WaveScriptableObject waveScriptableObject;
-    private void Start()
+    public class GameService : MonoBehaviour
     {
-        CreateServies();
-        InjectDependency();
-    }
+        // Services:
+        private EventService eventService;
+        private MapService mapService;
+        private WaveService waveService;
+        private SoundService soundService;
+        private PlayerService playerService;
+        [SerializeField] private UIService uiService;
 
-    private void CreateServies()
-    {
-        eventService = new EventService();
-        mapService = new MapService(mapScriptableObject);
-        waveService = new WaveService(waveScriptableObject);
-        soundService = new SoundService(soundScriptableObject, audioEffects, backgroundMusic);
-        playerService = new PlayerService(playerScriptableObject);
-    }
 
-    public void InjectDependency()
-    {
-        playerService.Init(uIService, mapService, soundService);
-        mapService.Init(eventService);
-        waveService.Init(mapService, uIService, eventService, soundService, playerService);
-        uIService.Init(eventService, waveService, playerService);
-    }
+        // Scriptable Objects:
+        [SerializeField] private MapScriptableObject mapScriptableObject;
+        [SerializeField] private WaveScriptableObject waveScriptableObject;
+        [SerializeField] private SoundScriptableObject soundScriptableObject;
+        [SerializeField] private PlayerScriptableObject playerScriptableObject;
 
-    private void Update()
-    {
-        playerService.Update();
+        // Scene References:
+        [SerializeField] private AudioSource sfxSource;
+        [SerializeField] private AudioSource bgMusicSource;
+
+        private void Start()
+        {
+            InitializeServices();
+            InjectDependencies();
+        }
+
+        private void InitializeServices()
+        {
+            eventService = new EventService();
+            soundService = new SoundService(soundScriptableObject, sfxSource, bgMusicSource);
+            mapService = new MapService(mapScriptableObject);
+            playerService = new PlayerService(playerScriptableObject);
+            waveService = new WaveService(waveScriptableObject);
+        }
+
+        private void InjectDependencies()
+        {
+            mapService.Init(eventService);
+            uiService.Init(waveService, playerService, eventService);
+            playerService.Init(mapService, uiService, soundService);
+            waveService.Init(uiService, mapService, playerService, soundService, eventService);
+        }
+
+        private void Update()
+        {
+            playerService.Update();
+        }
     }
 }

@@ -1,22 +1,26 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using ServiceLocator.Player;
+using ServiceLocator.Main;
 
 namespace ServiceLocator.UI
 {
     public class MonkeyCellController
     {
+        private PlayerService playerService;
+        private UIService uiService;
         private MonkeyCellView monkeyCellView;
         private MonkeyCellScriptableObject monkeyCellSO;
 
-        private PlayerService playerService;
-
-        public MonkeyCellController(Transform cellContainer, MonkeyCellView monkeyCellPrefab, MonkeyCellScriptableObject monkeyCellScriptableObject, PlayerService playerService)
+        public MonkeyCellController(PlayerService playerService, UIService uIService, Transform cellContainer, MonkeyCellView monkeyCellPrefab, MonkeyCellScriptableObject monkeyCellScriptableObject)
         {
             this.playerService = playerService;
+            this.uiService = uIService;
             this.monkeyCellSO = monkeyCellScriptableObject;
             monkeyCellView = Object.Instantiate(monkeyCellPrefab, cellContainer);
             monkeyCellView.SetController(this);
-            monkeyCellView.ConfigureCellUI(monkeyCellSO.Sprite, monkeyCellSO.Name, monkeyCellSO.Cost);
+            monkeyCellView.ConfigureCellUI(monkeyCellSO.Sprite, monkeyCellSO.Name, monkeyCellSO.Cost, uiService.GetCanvas());
         }
 
         public void MonkeyDraggedAt(Vector3 dragPosition)

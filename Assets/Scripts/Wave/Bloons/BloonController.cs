@@ -66,7 +66,7 @@ namespace ServiceLocator.Wave.Bloon
             int reducedHealth = currentHealth - damageToTake;
             currentHealth = reducedHealth <= 0 ? 0 : reducedHealth;
 
-            if (currentHealth <= 0 && currentState == BloonState.ACTIVE)
+            if(currentHealth <= 0 && currentState == BloonState.ACTIVE)
             {
                 PopBloon();
                 soundService.PlaySoundEffects(SoundType.BloonPop);
@@ -75,7 +75,7 @@ namespace ServiceLocator.Wave.Bloon
 
         public void FollowWayPoints()
         {
-            if (HasReachedFinalWaypoint())
+            if(HasReachedFinalWaypoint())
             {
                 ResetBloon();
             }

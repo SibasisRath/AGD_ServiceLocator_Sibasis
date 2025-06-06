@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using ServiceLocator.Main;
 using ServiceLocator.Player;
 using ServiceLocator.Events;
 
@@ -8,6 +9,8 @@ namespace ServiceLocator.Map
 {
     public class MapService
     {
+        // Dependencies:
+        private EventService eventService;
         private MapScriptableObject mapScriptableObject;
 
         private Grid currentGrid;
@@ -15,18 +18,14 @@ namespace ServiceLocator.Map
         private MapData currentMapData;
         private SpriteRenderer tileOverlay;
 
-        private EventService eventService;
-
         public MapService(MapScriptableObject mapScriptableObject)
         {
             this.mapScriptableObject = mapScriptableObject;
             tileOverlay = Object.Instantiate(mapScriptableObject.TileOverlay).GetComponent<SpriteRenderer>();
             ResetTileOverlay();
-            tileOverlay = Object.Instantiate(mapScriptableObject.TileOverlay).GetComponent<SpriteRenderer>();
-            ResetTileOverlay();
         }
 
-        public void Init(EventService eventService) 
+        public void Init(EventService eventService)
         {
             this.eventService = eventService;
             SubscribeToEvents();
@@ -49,7 +48,7 @@ namespace ServiceLocator.Map
 
         private void SetTileOverlayColor(TileOverlayColor colorToSet)
         {
-            switch (colorToSet)
+            switch(colorToSet)
             {
                 case TileOverlayColor.TRANSPARENT:
                     tileOverlay.color = mapScriptableObject.DefaultTileColor;
@@ -69,7 +68,7 @@ namespace ServiceLocator.Map
             Vector3Int cellPosition = GetCellPosition(mousePosition);
             Vector3 cellCenter = GetCenterOfCell(cellPosition);
 
-            if (CanSpawnOnPosition(cellCenter, cellPosition))
+            if(CanSpawnOnPosition(cellCenter, cellPosition))
             {
                 tileOverlay.transform.position = cellCenter;
                 SetTileOverlayColor(TileOverlayColor.SPAWNABLE);
@@ -105,9 +104,9 @@ namespace ServiceLocator.Map
 
         private Vector3 GetCenterOfCell(Vector3Int cellPosition) => currentGrid.GetCellCenterWorld(cellPosition);
 
-        private bool CanSpawnOnPosition(Vector3 cellCenter, Vector3Int cellPosition)
+        private bool CanSpawnOnPosition(Vector3 centerCell, Vector3Int cellPosition)
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(cellCenter, 0.1f);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(centerCell, 0.1f);
             return InisdeTilemapBounds(cellPosition) && !HasClickedOnObstacle(colliders) && !IsOverLappingMonkey(colliders);
         }
 
